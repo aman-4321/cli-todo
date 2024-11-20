@@ -1,12 +1,10 @@
 package main
 
-import "fmt"
-
 func main() {
 	todos := Todos{}
-	todos.add("Buy Milk")
-	todos.add("Buy Bread")
-	fmt.Printf("%+v\n\n", todos)
-	todos.delete(0)
-	fmt.Printf("%+v", todos)
+	storage := NewStorage[Todos]("todos.json")
+	storage.Load(&todos)
+	CmdFlags := NewCmdFlags()
+	CmdFlags.Execute(&todos)
+	storage.Save(todos)
 }
